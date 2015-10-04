@@ -1,0 +1,28 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: postgresql
+  labels:
+    name: postgresql
+spec:
+  containers:
+    - resources:
+        limits :
+          cpu: 0.5
+      image: postgres:latest
+      name: postgresql
+      env:
+        - name: POSTGRES_PASSWORD
+          value: yourpassword
+      ports:
+        - containerPort: 5432
+          name: pg-port
+      volumeMounts:
+        - mountPath: /var/lib/postgresql
+          name: pgsql-data
+          readOnly: false
+  volumes:
+    - hostPath:
+        path: /home/core/data/pg
+      name: pgsql-data
